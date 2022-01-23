@@ -23,7 +23,7 @@ public class CollectionServiceImplementation implements CollectionService {
     public java.util.Collection<Collection> list(int limit, int page) {
         Query query = new Query();
         query.limit(limit);
-        query.skip(page);
+        query.skip((page - 1)*limit);
         return mongoOperations.find(query, Collection.class);
 //        return (java.util.Collection<Collection>) collectionRepository.findAll().stream().limit(limit);
     }

@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
+
 @Document(collection = "collections")
 public class Collection {
     @Id
@@ -65,6 +67,17 @@ public class Collection {
 
     @Field
     private String owners_percentage;
+
+    @Field
+    private NFT[] nfts;
+
+    public NFT[] getNfts() {
+        return nfts;
+    }
+
+    public void setNfts(NFT[] nfts) {
+        this.nfts = nfts;
+    }
 
     public Collection() {
     }
