@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import project.nft.nft.models.Collection;
 import project.nft.nft.services.CollectionService;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,13 +31,42 @@ public class CollectionController {
 
     @GetMapping("/analysis")
     public String startAnalysis(@RequestParam("clusters") int k) {
-        System.out.println(k);
+        // get data from mongodb
+        List<Collection> collections = this.collectionService.getCollectionData();
+        // push data to csvFile
+        try(BufferedWriter csvWriter = new BufferedWriter(new FileWriter("files/sample.csv"))) {
+            csvWriter.write("name");
+            csvWriter.write(";");
+            csvWriter.write("totalSupply");
+            csvWriter.write(";");
+            csvWriter.write("owners");
+            csvWriter.write(";");
+            csvWriter.write("estimatedMarketCap");
+            csvWriter.write(";");
+            csvWriter.write("volume_7d");
+            csvWriter.write(";");
+            csvWriter.write("avg_price_7d");
+            csvWriter.write(";");
+            csvWriter.write("sales_7d");
+            csvWriter.write(";");
+            csvWriter.write("sales_all_time");
+            csvWriter.write(";");
+            csvWriter.write("volume_all_time");
+            csvWriter.write(";");
+            csvWriter.write("owners_percentage");
+            csvWriter.write("\n");
+            for (Collection collection: collections) {
+                csvWriter.write(collection.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         try {
             // read data
             DataSet data = new DataSet("files/sample.csv");
-            System.out.println(data.getAttrNames());
             // remove (input any irrelevant attributes)
-            // data.removeAttr("Class");
+             data.removeAttr("name");
             // cluster
             kmeans(data, k);
             // output into a csv

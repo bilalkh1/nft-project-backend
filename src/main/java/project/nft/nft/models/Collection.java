@@ -283,4 +283,18 @@ public class Collection {
     public void setOwners_percentage(String owners_percentage) {
         this.owners_percentage = owners_percentage;
     }
+
+    @Override
+    public String toString() {
+        return  name + ';' +
+                totalSupply + ';' +
+                owners + ';' +
+                estimatedMarketCap + ';' +
+                volume_7d + ';' +
+                avg_price_7d + ';' +
+                sales_7d + ';' +
+                sales_all_time + ';' +
+                volume_all_time + ';' +
+                owners_percentage + '\n';
+    }
 }

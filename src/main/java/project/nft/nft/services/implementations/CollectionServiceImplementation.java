@@ -10,6 +10,9 @@ import project.nft.nft.models.Collection;
 import project.nft.nft.repositories.CollectionRepository;
 import project.nft.nft.services.CollectionService;
 
+import java.util.List;
+
+
 @RequiredArgsConstructor
 @Service
 @Transactional
@@ -26,5 +29,10 @@ public class CollectionServiceImplementation implements CollectionService {
         query.skip((page - 1)*limit);
         return mongoOperations.find(query, Collection.class);
 //        return (java.util.Collection<Collection>) collectionRepository.findAll().stream().limit(limit);
+    }
+
+    @Override
+    public List<Collection> getCollectionData() {
+        return mongoOperations.findAll(Collection.class);
     }
 }

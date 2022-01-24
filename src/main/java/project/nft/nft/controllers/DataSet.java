@@ -36,19 +36,19 @@ public class DataSet {
         String row;
         try(BufferedReader csvReader = new BufferedReader(new FileReader(csvFileName))) {
             if((row = csvReader.readLine()) != null){
-                String[] data = row.split(",");
+                String[] data = row.split(";");
                 Collections.addAll(attrNames, data);
             }
 
             while ((row = csvReader.readLine()) != null) {
-                String[] data = row.split(",");
+                String[] data = row.split(";");
 
                 HashMap<String, Double> record = new HashMap<>();
 
                 if(attrNames.size() == data.length) {
-                    for (int i = 0; i < attrNames.size(); i++) {
+                    for (int i = 1; i < attrNames.size(); i++) {
                         String name = attrNames.get(i);
-                        double val = Double.parseDouble(data[i]);
+                        double val = Double.parseDouble(data[i].replace(",","").replace("%",""));
                         record.put(name, val);
                         updateMin(name, val);
                         updateMax(name, val);
@@ -68,7 +68,7 @@ public class DataSet {
         try(BufferedWriter csvWriter = new BufferedWriter(new FileWriter(outputFileName))) {
             for (String attrName : attrNames) {
                 csvWriter.write(attrName);
-                csvWriter.write(",");
+                csvWriter.write(";");
             }
 
             csvWriter.write("ClusterId");
@@ -77,7 +77,7 @@ public class DataSet {
             for(var record : records){
                 for (String attrName : attrNames) {
                     csvWriter.write(String.valueOf(record.getRecord().get(attrName)));
-                    csvWriter.write(",");
+                    csvWriter.write(";");
                 }
                 csvWriter.write(String.valueOf(record.clusterNo));
                 csvWriter.write("\n");
