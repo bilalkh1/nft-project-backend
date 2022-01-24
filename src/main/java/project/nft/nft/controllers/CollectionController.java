@@ -6,9 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import project.nft.nft.models.Collection;
 import project.nft.nft.services.CollectionService;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import static project.nft.nft.controllers.KMeans.kMeanspp;
@@ -30,7 +36,7 @@ public class CollectionController {
     }
 
     @GetMapping("/analysis")
-    public String startAnalysis(@RequestParam("clusters") int k) {
+    public List<Collection> startAnalysis(@RequestParam("clusters") int k) {
         // get data from mongodb
         List<Collection> collections = this.collectionService.getCollectionData();
         // push data to csvFile
@@ -75,7 +81,7 @@ public class CollectionController {
             e.printStackTrace();
         }
 
-        return "KMeans finished successfully";
+        return collectionService.returnCollectionFromCSV("files/sample.csv", "files/sampleClustered.csv");
     }
 
 }
