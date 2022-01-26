@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.nft.nft.models.Collection;
+import project.nft.nft.models.KMeansCollection;
 import project.nft.nft.repositories.CollectionRepository;
 import project.nft.nft.services.CollectionService;
 
@@ -84,6 +85,12 @@ public class CollectionServiceImplementation implements CollectionService {
         }
         collections.remove(0);
         return collections;
+    }
+
+    @Override
+    public void storeCollectionKMeans(String fileName, String fileNameKmeans) {
+        List<Collection> collections = returnCollectionFromCSV(fileName, fileNameKmeans);
+        mongoOperations.insert(collections, KMeansCollection.class);
     }
 
     public static Collection createCollection(String[] metadata, String name) {

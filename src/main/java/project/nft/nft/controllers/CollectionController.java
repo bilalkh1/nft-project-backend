@@ -6,22 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import project.nft.nft.models.Collection;
 import project.nft.nft.services.CollectionService;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
-import static project.nft.nft.controllers.KMeans.kMeanspp;
 import static project.nft.nft.controllers.KMeans.kmeans;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8100", "http://localhost:4200"}, maxAge = 6000)
+@CrossOrigin(origins = {"http://localhost:4200" , "http://localhost:8100"}, maxAge = 6000)
 @RequestMapping("/collections")
 @RequiredArgsConstructor
 public class CollectionController {
@@ -82,6 +75,12 @@ public class CollectionController {
         }
 
         return collectionService.returnCollectionFromCSV("files/sample.csv", "files/sampleClustered.csv");
+    }
+
+    @PostMapping("/store")
+    public void storeKmeansData() {
+        // store data in mongodb
+        collectionService.storeCollectionKMeans("files/sample.csv", "files/sampleClustered.csv");
     }
 
 }
