@@ -1,5 +1,7 @@
 package project.nft.nft.services;
 
+import project.nft.nft.models.KMeansCollection;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -8,4 +10,5 @@ public interface CollectionService {
     List<project.nft.nft.models.Collection> getCollectionData();
     List<project.nft.nft.models.Collection> returnCollectionFromCSV(String fileName, String fileNameKmeans);
     void storeCollectionKMeans(String fileName, String fileNameKmeans);
+    List<KMeansCollection> getKMeans();
 }

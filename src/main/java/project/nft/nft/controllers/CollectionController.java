@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project.nft.nft.models.Collection;
+import project.nft.nft.models.KMeansCollection;
 import project.nft.nft.services.CollectionService;
 
 import java.io.BufferedWriter;
@@ -83,4 +84,9 @@ public class CollectionController {
         collectionService.storeCollectionKMeans("files/sample.csv", "files/sampleClustered.csv");
     }
 
+    @GetMapping("/kmeans")
+    public List<KMeansCollection> getKmeansData() {
+        // get data from mongodb
+        return collectionService.getKMeans();
+    }
 }

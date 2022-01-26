@@ -93,6 +93,11 @@ public class CollectionServiceImplementation implements CollectionService {
         mongoOperations.insert(collections, KMeansCollection.class);
     }
 
+    @Override
+    public List<KMeansCollection> getKMeans() {
+        return mongoOperations.findAll(KMeansCollection.class);
+    }
+
     public static Collection createCollection(String[] metadata, String name) {
         // extract variables from metadata
         String totalSupply = metadata[0];
